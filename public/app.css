@@ -16,3 +16,11 @@ article + article {
     padding-top: 3rem;
     border-top: 1px solid #c5c5c5;
 }
+
+.color1{
+    background-color: #F4F4F4;
+}
+
+.color2{
+    background-color: #FFFFFF;
+}

@@ -145,3 +145,22 @@ Route::get('/posts/{post}', function($slug){
 // Route::get('/', function () {
 //     return ['foo'=> 'bar']; //return json
 // });
+
+Route::get('write-file', function(){
+   $path = resource_path("posts/file.txt");
+   $content = "This is test content";
+   File::put($path, $content);
+   
+   if(File::exists($path)){
+    echo "The file exists";
+   }else{
+    echo "Failed to create the file";
+   }
+});
+
+Route::get('read-file', function(){
+    $path = resource_path("posts/file.txt");
+    if(File::exists($path)) {
+        echo File::get($path);
+    }
+});
