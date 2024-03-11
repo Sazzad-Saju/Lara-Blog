@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Post;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Symfony\Component\Yaml\Yaml;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +18,90 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts'); //return view
+    // $posts = Post::all();
+    
+    // // ddd($posts);
+    // // ddd($posts[0]);
+    // // ddd($posts[0]->getPathname());
+    // // ddd((string)$posts[0]);
+    // // ddd($posts[0]->getContents());
+    
+    // // return array_map(function($file) {
+    // //     return $file->getContents();
+    // // }, $files);
+    
+    // // return array_map(fn($file) => $file->getContents(), $files);
+    
+    // return view('posts', [
+    //     'posts' => $posts
+    // ]); //return view
+    
+    // $document = YamlFrontMatter::parseFile(
+    //     resource_path('posts/my-fourth-post.html')
+    // );
+    // // ddd($document);
+    // // ddd($document->body());
+    // ddd($document->matter('title'));
+    
+    // $files = File::files(resource_path("posts"));
+    
+    // $posts = array_map(function($file){
+    //     $document = YamlFrontMatter::parseFile($file);
+    //     return new Post(
+    //         $document->title,
+    //         $document->excerpt,
+    //         $document->date,
+    //         $document->body(),
+    //         $document->slug
+    //     );
+    // }, $files);
+    
+    // $posts = collect($files)
+    //     ->map(function($file){
+    //         $document = YamlFrontMatter::parseFile($file);
+            
+    //         return new Post(
+    //             $document->title,
+    //             $document->excerpt,
+    //             $document->date,
+    //             $document->body(),
+    //             $document->slug
+    //         );
+    //     });
+    
+    // $posts = collect(File::files(resource_path("posts")))
+    //     ->map(fn($file) => YamlFrontMatter::parseFile(($file)))
+    //     ->map(fn($document) => new Post(
+    //             $document->title,
+    //             $document->excerpt,
+    //             $document->date,
+    //             $document->body(),
+    //             $document->slug
+    //         ));
+    
+    // $posts = [];
+    
+    // foreach($files as $file){
+    //     $document = YamlFrontMatter::parseFile($file);
+    //     $posts[] = new Post(
+    //         $document->title,
+    //         $document->excerpt,
+    //         $document->date,
+    //         $document->body(),
+    //         $document->slug,
+    //     );
+    // }
+    
+    // ddd($posts);
+    // ddd($posts[0]->title);
+    // ddd($posts[0]->body);
+    
+    // return view('posts', ['posts' => $posts]);
+    return view('posts', ['posts' => Post::all()]);
 });
 
 Route::get('/posts/{post}', function($slug){
-    
-    
+    /*
     if(!file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")){ //inline
         // ddd('File does not exist');
         // ddd('File does not exist');
@@ -40,6 +122,13 @@ Route::get('/posts/{post}', function($slug){
     return view('post',[
      'post' => $post
     ]); 
+    */
+    
+    /** Find a post by it's slug and pass it to view */
+    $post = Post::find($slug);
+    return view('post', [
+        'post' => $post
+    ]);
  })->where('post', '[A-z_\-]+');
 
 
