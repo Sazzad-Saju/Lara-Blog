@@ -31,6 +31,9 @@ class Post{
         // // }, $files);
         
         // return array_map(fn($file) => $file->getContents(), $files);
+        // return File::files(resource_path("posts"));
+        // return gettype(File::files(resource_path("posts")));
+        
         return cache()->rememberForever('posts.all', function(){
             return collect(File::files(resource_path("posts")))
             ->map(fn($file) => YamlFrontMatter::parseFile(($file)))
@@ -60,5 +63,12 @@ class Post{
         // return $posts->firstWhere('slug', $slug);
         
         return static::all()->firstWhere('slug', $slug);
-    } 
+    }
+    public static function findOrFail($slug) {
+        $post = static::all()->firstWhere('slug', $slug);
+        if(!$post){
+            throw new ModelNotFoundException();
+        }
+        return $post;
+    }
 }

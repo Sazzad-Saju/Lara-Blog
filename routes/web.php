@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Symfony\Component\Yaml\Yaml;
@@ -95,7 +97,8 @@ Route::get('/', function () {
     // ddd($posts);
     // ddd($posts[0]->title);
     // ddd($posts[0]->body);
-    
+    // $posts = Post::all();
+    // ddd($posts);
     // return view('posts', ['posts' => $posts]);
     return view('posts', ['posts' => Post::all()]);
 });
@@ -123,9 +126,9 @@ Route::get('/posts/{post}', function($slug){
      'post' => $post
     ]); 
     */
-    
+    // ddd('what');
     /** Find a post by it's slug and pass it to view */
-    $post = Post::find($slug);
+    $post = Post::findOrFail($slug);
     return view('post', [
         'post' => $post
     ]);
@@ -163,4 +166,31 @@ Route::get('read-file', function(){
     if(File::exists($path)) {
         echo File::get($path);
     }
+});
+
+Route::get('collect', function(){
+    // $collection = collect(['taylor', 'abigail', null])->map(function (?string $name) {
+    //     return strtoupper($name);
+    // })->reject(function (string $name) {
+    //     return empty($name);
+    // });
+    $collection = collect(['taylor', 'abigail', null])
+                ->map(fn($name) => strtoupper($name))
+                ->reject(fn($name) => empty($name));
+    
+    // ddd($collection);
+    
+    // $collection2 = collect([1, 2, 3]);
+    // ddd($collection2);
+    
+    Collection::macro('toLocale', function (string $locale) {
+        return $this->map(function (string $value) use ($locale) {
+            return Lang::get($value, [], $locale);
+        });
+    });
+     
+    $collection = collect(['first', 'second']);
+     
+    $translated = $collection->toLocale('es');
+    ddd($translated);
 });

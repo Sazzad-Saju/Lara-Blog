@@ -4,6 +4,6 @@
 <link rel="stylesheet" href="/app.css">
 
 <body>
-    @yield('content')
+    {{ $slot }}
 </body>
 
