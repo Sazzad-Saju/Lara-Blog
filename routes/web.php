@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
@@ -100,39 +103,61 @@ Route::get('/', function () {
     // $posts = Post::all();
     // ddd($posts);
     // return view('posts', ['posts' => $posts]);
-    return view('posts', ['posts' => Post::all()]);
+    DB::listen(function($query){
+        logger($query->sql, $query->bindings);
+    });
+    return view('posts', [
+        // 'posts' => Post::all()
+        // 'posts' => Post::latest()->with('category', 'author')->get()
+        'posts' => Post::latest()->get()
+    ]);
 });
 
-Route::get('/posts/{post}', function($slug){
-    /*
-    if(!file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")){ //inline
-        // ddd('File does not exist');
-        // ddd('File does not exist');
-        // abort(404);
-        return redirect('/');
-    }
+// Route::get('/posts/{post}', function($slug){
+// Route::get('/posts/{id}', function($id){
+// Route::get('posts/{post}', function(Post $post){
+//    return view('post', ['post' => $post]);
+// });
+
+// Route::get('posts/{post:slug}', function(Post $post){
+//     return view('post', ['post' => $post]);
+// }); 
+Route::get('posts/{post:slug}', function(Post $post){
+    return view('post', ['post' => $post]);
+});
+
+// Route::get('posts/{post}', function(Post $post){
+//     return $post;
+//     /*
+//     if(!file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")){ //inline
+//         // ddd('File does not exist');
+//         // ddd('File does not exist');
+//         // abort(404);
+//         return redirect('/');
+//     }
     
-    // $post = file_get_contents($path);
+//     // $post = file_get_contents($path);
     
-    // $post = cache()->remember("posts,{$slug}", 5, function() use($path){
-    //     var_dump('file_get_contents');
-    //    return file_get_contents(($path)); 
-    // });
+//     // $post = cache()->remember("posts,{$slug}", 5, function() use($path){
+//     //     var_dump('file_get_contents');
+//     //    return file_get_contents(($path)); 
+//     // });
     
-    //use arrow fn instead
-    $post = cache()->remember("posts,{$slug}", 5, fn() => file_get_contents($path));
+//     //use arrow fn instead
+//     $post = cache()->remember("posts,{$slug}", 5, fn() => file_get_contents($path));
     
-    return view('post',[
-     'post' => $post
-    ]); 
-    */
-    // ddd('what');
-    /** Find a post by it's slug and pass it to view */
-    $post = Post::findOrFail($slug);
-    return view('post', [
-        'post' => $post
-    ]);
- })->where('post', '[A-z_\-]+');
+//     return view('post',[
+//      'post' => $post
+//     ]); 
+//     */
+//     // ddd('what');
+//     /** Find a post by it's slug and pass it to view */
+//     // $post = Post::findOrFail($slug);
+//     // $post = Post::findOrFail($id);
+//     return view('post', [
+//         'post' => $post
+//     ]);
+//  })->where('post', '[A-z_\-]+');
 
 
 // Route::get('/post', function(){
@@ -148,6 +173,21 @@ Route::get('/posts/{post}', function($slug){
 // Route::get('/', function () {
 //     return ['foo'=> 'bar']; //return json
 // });
+
+Route::get('categories/{category:slug}', function(Category $category){
+   return view('posts', [
+    // 'posts' => $category->post->load(['category', 'author'])
+    'posts' => $category->post
+    ]); 
+});
+
+// Route::get('authors/{author}', function(User $author){
+Route::get('authors/{author:user_name}', function(User $author){
+   return view('posts', [
+    'posts' => $author->posts
+   ]);
+});
+/** external */
 
 Route::get('write-file', function(){
    $path = resource_path("posts/file.txt");
