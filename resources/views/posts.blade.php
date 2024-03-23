@@ -9,8 +9,8 @@
 </x-layout> --}}
 
 
-<x-layout>
-    @foreach($posts as $post)
+{{-- <x-layout>
+    @foreach ($posts as $post)
         <article class="{{$loop->even ? 'color1' : 'color2'}}">
             <a href="/posts/{{$post->slug}}"><h1>{{$post->title}}</h1></a>
             <p>
@@ -24,5 +24,23 @@
             </x-button>
         </article>
     @endforeach
-</x-layout>
+</x-layout> --}}
 
+<x-layout>
+    @include('_posts-header')
+
+    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+        @if($posts->count() > 0)
+            {{-- reusable component  --}}
+            <x-post-grid :posts="$posts" />
+        @else
+            <p class="text-center">No posts yet. Please check later!</p>
+        @endif
+
+        {{-- <div class="lg:grid lg:grid-cols-3">
+            <x-post-card />
+            <x-post-card />
+            <x-post-card />
+        </div> --}}
+    </main>
+</x-layout>

@@ -109,9 +109,10 @@ Route::get('/', function () {
     return view('posts', [
         // 'posts' => Post::all()
         // 'posts' => Post::latest()->with('category', 'author')->get()
-        'posts' => Post::latest()->get()
+        'posts' => Post::latest()->get(),
+        'categories' => Category::all(),
     ]);
-});
+})->name('home');
 
 // Route::get('/posts/{post}', function($slug){
 // Route::get('/posts/{id}', function($id){
@@ -177,14 +178,17 @@ Route::get('posts/{post:slug}', function(Post $post){
 Route::get('categories/{category:slug}', function(Category $category){
    return view('posts', [
     // 'posts' => $category->post->load(['category', 'author'])
-    'posts' => $category->post
+    'posts' => $category->post,
+    'currentCategory' => $categorycategory,
+    'categories' => Category::all(),
     ]); 
 });
 
 // Route::get('authors/{author}', function(User $author){
 Route::get('authors/{author:user_name}', function(User $author){
    return view('posts', [
-    'posts' => $author->posts
+    'posts' => $author->posts,
+    'categories' => Category::all(),
    ]);
 });
 /** external */
