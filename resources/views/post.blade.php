@@ -1,13 +1,3 @@
-{{-- <x-layout>
-    <article>
-        <h1>{{ $post->title }}</h1>
-        <p>
-            By <a href="/authors/{{$post->author->user_name}}">{{$post->author->name}}</a> in <a href="/categories/{{$post->category->slug}}">{{$post->category->name}}</a>
-        </p>
-        <div>{!! $post->body !!}</div>
-    </article>
-    <a href="/">Go Back</a>
-</x-layout> --}}
 <x-layout>
     <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
         <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
@@ -43,12 +33,7 @@
 
                         Back to Posts
                     </a>
-
-                    {{-- <div class="space-x-2">
-                        <a href="/categories/{{$post->category->slug}}"
-                            class="px-3 py-1 border border-blue-300 rounded-full text-blue-300 text-xs uppercase font-semibold"
-                            style="font-size: 10px">{{$post->category->name}}</a>
-                    </div> --}}
+                    
                     <div class="space-x-2">
                         <x-category-button :category="$post->category" />
                     </div>

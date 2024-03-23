@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Post::factory()->create();
         
         $user = User::factory()->create([
             'name' => 'Sazzad Saju'
@@ -26,6 +25,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
         ]);
         
+        //Seeder:
         // User::truncate();
         // Category::truncate();
         
@@ -62,11 +62,6 @@ class DatabaseSeeder extends Seeder
         //     'body' => '<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod aliquid iure nulla. Veritatis quod itaque sed illum repellat enim reiciendis maxime, ex officia magnam nemo illo asperiores laudantium non ipsam excepturi perferendis quisquam architecto impedit necessitatibus ad repellendus, laborum quam pariatur! Vel aliquam, molestiae cumque quos suscipit fuga maiores magnam.</p>',
         //     'category_id' => $work->id,
         //     'user_id' => $user->id
-        // ]);
-        
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
         // ]);
     }
 }

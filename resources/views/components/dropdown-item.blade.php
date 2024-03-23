@@ -1,7 +1,5 @@
 @props(['active' =>  false])
 
-{{-- attributes merge as prev. or use attribute as method --}}
-
 @php
     $classes='block text-left px-3 text-sm leading-6 hover:bg-blue-300 focus:bg-blue-300 hover:text-white focus:text-white';
     

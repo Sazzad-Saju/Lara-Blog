@@ -1,14 +1,4 @@
-{{-- <!doctype html>
-
-<title>LaraBlog</title>
-<link rel="stylesheet" href="/app.css">
-
-<body>
-    {{ $slot }}
-</body>
- --}}
 <!doctype html>
-
 <title>Laravel From Scratch Blog</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
