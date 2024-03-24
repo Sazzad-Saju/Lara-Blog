@@ -18,13 +18,15 @@ class PostController extends Controller
         // }
         
         // dd(request('search')); //string
+        // dd(request(['search', 'category'])); //what
         // dd(request(['search'])); //array
         // dd(request()->only('search')); //array
         
         return view('posts', [
             // 'posts' => Post::latest()->filter()->get(),
-            'posts' => Post::latest()->filter(request(['search']))->get(),
-            'categories' => Category::all(),
+            'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
+            // 'currentCategory' => Category::firstWhere('slug', request('category')),
+            // 'categories' => Category::all(),
         ]);
     }
     
