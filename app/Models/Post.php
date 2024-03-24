@@ -13,33 +13,21 @@ class Post extends Model
     
     protected $with = ['category', 'author'];
     
-    public function scopeFilter($query, array $filters)     //Post::newQuery()->filter()
+    public function scopeFilter($query, array $filters)
     {
-        // if(request('search')){
-        // if(isset($filters['search'])){
-        // if($filters['search'] ?? false){
-        //     $query->where('title','like', '%' . request('search') . '%')
-        //         ->orWhere('body', 'like', '%'. request('search') . '%')
-        //         ->orWhere('excerpt', 'like', '%'. request('search') . '%');
-        // }   
         
-        // $query->when($filters['search'] ?? false, function ($query, $search){
+        // $query->when($filters['search'] ?? false, fn($query, $search) => 
         //     $query->where('title','like', '%' . $search . '%')
         //         ->orWhere('body', 'like', '%'. $search . '%')
-        //         ->orWhere('excerpt', 'like', '%'. $search . '%');
-        // });
-        
-        $query->when($filters['search'] ?? false, fn($query, $search) => 
-            $query->where('title','like', '%' . $search . '%')
-                ->orWhere('body', 'like', '%'. $search . '%')
-                ->orWhere('excerpt', 'like', '%'. $search . '%'));
+        //         ->orWhere('excerpt', 'like', '%'. $search . '%'));
                 
-        // $query->when($filters['category'] ?? false, fn($query, $category) => 
-        //     $query->whereExists(fn($query) => 
-        //         $query->from('categories')
-        //             ->whereColumn('categories.id', 'posts.category_id')
-        //             ->where('categories.slug', $category))
-        // );
+        $query->when($filters['search'] ?? false, fn($query, $search) => 
+            $query->where(fn($query) => 
+                $query->where('title','like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%'. $search . '%')
+                ->orWhere('excerpt', 'like', '%'. $search . '%')
+            )
+        );
         
         $query->when($filters['category'] ?? false, fn($query, $category) => 
             $query->whereHas('category', fn($query) => 
@@ -47,6 +35,11 @@ class Post extends Model
             )
         );
         
+        $query->when($filters['author'] ?? false, fn($query, $author) => 
+            $query->whereHas('author', fn($query) => 
+                $query->where('user_name', $author)
+            )
+        );
     }
     
     public function category()
