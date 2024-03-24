@@ -10,41 +10,13 @@ class PostController extends Controller
 {
     public function index()
     {
-        // $posts = Post::latest();
-        // if(request('search')){
-        //     $posts->where('title','like', '%' . request('search') . '%')
-        //         ->orWhere('body', 'like', '%'. request('search') . '%')
-        //         ->orWhere('excerpt', 'like', '%'. request('search') . '%');
-        // }
-        
-        // dd(request('search')); //string
-        // dd(request(['search', 'category'])); //what
-        // dd(request(['search'])); //array
-        // dd(request()->only('search')); //array
-        
-        return view('posts', [
-            // 'posts' => Post::latest()->filter()->get(),
+        return view('posts.index', [
             'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
-            // 'currentCategory' => Category::firstWhere('slug', request('category')),
-            // 'categories' => Category::all(),
         ]);
     }
     
     public function show(Post $post)
     {
-        return view('post', ['post' => $post]);
-    }
-    
-    public function getPosts(){
-        // return Post::latest()->filter()->get();
-        
-        // $posts = Post::latest();
-        // if(request('search')){
-        //     $posts->where('title','like', '%' . request('search') . '%')
-        //         ->orWhere('body', 'like', '%'. request('search') . '%')
-        //         ->orWhere('excerpt', 'like', '%'. request('search') . '%');
-        // }
-        
-        // return $posts->get();
+        return view('posts.show', ['post' => $post]);
     }
 }
