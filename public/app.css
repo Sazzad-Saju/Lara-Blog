@@ -24,3 +24,8 @@ article + article {
 .color2{
     background-color: #FFFFFF;
 }
+
+/* max-width tailwind class */
+.max-w-lg{
+    max-width: 32rem;
+}
