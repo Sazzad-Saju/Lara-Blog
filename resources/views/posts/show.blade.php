@@ -5,14 +5,14 @@
                 <img src="/images/illustration-1.png" alt="" class="rounded-xl">
 
                 <p class="mt-4 block text-gray-400 text-xs">
-                    Published <time>{{$post->created_at->diffForHumans()}}</time>
+                    Published <time>{{ $post->created_at->diffForHumans() }}</time>
                 </p>
 
                 <div class="flex items-center lg:justify-center text-sm mt-4">
                     <img src="/images/lary-avatar.svg" alt="Lary avatar">
                     <div class="ml-3 text-left">
                         <h5 class="font-bold">
-                            <a href="/?author={{$post->author->user_name}}">{{$post->author->name}}</a>
+                            <a href="/?author={{ $post->author->user_name }}">{{ $post->author->name }}</a>
                         </h5>
                         <h6>Mascot at Laracasts</h6>
                     </div>
@@ -35,20 +35,46 @@
 
                         Back to Posts
                     </a>
-                    
+
                     <div class="space-x-2">
                         <x-category-button :category="$post->category" />
                     </div>
                 </div>
 
                 <h1 class="font-bold text-3xl lg:text-4xl mb-10">
-                    {{$post->title}}
+                    {{ $post->title }}
                 </h1>
 
                 <div class="space-y-4 lg:text-lg leading-loose">
                     {!! $post->body !!}
                 </div>
             </div>
+
+            {{-- comments --}}
+            <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                {{-- <article class="flex bg-gray-100 border border-gray-200 p-6 rounded-xl space-x-4">
+                    <div class="flex-shrink-0">
+                        <img src="https://i.pravatar.cc/60" alt="" width="60px" class="rounded-xl">
+                    </div>
+                    <div>
+                        <header class="mb-4">
+                            <h3 class="font-bold">John Doe</h3>
+                            <p class="text-xs">
+                                Posted
+                                <time>8 month ago</time>
+                            </p>
+                        </header>
+
+                        <p>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi rem ab autem obcaecati
+                            inventore molestias. Dolorum sint error perspiciatis hic?
+                        </p>
+                    </div>
+                </article> --}}
+                <x-post-comment />
+                <x-post-comment />
+                <x-post-comment />
+            </section>
         </article>
     </main>
 </x-layout>
