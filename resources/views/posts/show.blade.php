@@ -71,9 +71,12 @@
                         </p>
                     </div>
                 </article> --}}
+                @foreach ($post->comments as $comment)
+                    <x-post-comment :comment="$comment" />
+                @endforeach
+                {{-- <x-post-comment />
                 <x-post-comment />
-                <x-post-comment />
-                <x-post-comment />
+                <x-post-comment /> --}}
             </section>
         </article>
     </main>

@@ -59,7 +59,7 @@ class User extends Authenticatable
     //accessor
     public function getUserNameAttribute($value)
     {
-        return ucwords('$value');
+        return ucwords($value);
     }
     
     public function posts()
