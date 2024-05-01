@@ -5,3 +5,7 @@ body{
     background: navy;
     color: white;
 } */
+
+html{
+    scroll-behavior: smooth;
+}
