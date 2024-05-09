@@ -22,17 +22,24 @@
             </div>
 
             <div class="mt-8 md:mt-0 flex items-center">
-                {{-- @if(!auth()->check()) --}}
-                {{-- @unless (auth()->check()) --}}
-                {{-- @guest
-                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
-                @endguest --}}
                 @auth
-                    <span class="text-xs font-bold uppercase">Welcome, {{auth()->user()->name}}!</span>
-                    <form method="POST" action="/logout">
+                    {{-- <span class="text-xs font-bold uppercase">Welcome, {{auth()->user()->name}}!</span> --}}
+                    <x-dropdown>
+                        <x-slot name="trigger">
+                            <button class="text-xs font-bold uppercase">Welcome, {{auth()->user()->name}}!</button>
+                        </x-slot>
+                        <x-dropdown-item href="/admin/dashboard">Dashboard</x-dropdown-item>
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                        <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout').submit()">Log Out</x-dropdown-item>
+                        <form id="logout" method="POST" action="/logout" class="hidden">
+                            @csrf
+                        </form>
+                    </x-dropdown>
+                        
+                    {{-- <form method="POST" action="/logout">
                         @csrf
                         <button type="submit" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">Log Out</button>
-                    </form>
+                    </form> --}}
                 @else
                 <a href="/register" class="text-xs font-bold uppercase">Register</a> 
                 <a href="/login" class="ml-3 text-xs font-bold uppercase">Log In</a> 

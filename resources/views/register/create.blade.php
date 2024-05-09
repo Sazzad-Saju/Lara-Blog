@@ -4,7 +4,14 @@
             <h1 class="text-center font-bold text-xl">Register!</h1>
             <form action="/register" method="POST" class="mt-10">
                 @csrf
-                <div class='mb-6'>
+                <x-form.input name="name" />
+                <x-form.input name="user_name" />
+                <x-form.input name="email" />
+                <x-form.input name="password" type="password" autocomplete="new-password" />
+                <x-form.button>Sign Up</x-form.button>
+                
+                
+                {{-- <div class='mb-6'>
                     <label class='block mb-2 uppercase font-bold text-xs text-gray-700'
                         for='name'
                     >
@@ -21,9 +28,9 @@
                     @error('name')
                         <p class="text-red-500 text-xs mt-1"> {{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
                 
-                <div class='mb-6'>
+                {{-- <div class='mb-6'>
                     <label class='block mb-2 uppercase font-bold text-xs text-gray-700'
                         for='user_name'
                     >
@@ -39,9 +46,9 @@
                     @error('user_name')
                         <p class="text-red-500 text-xs mt-1"> {{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
                 
-                <div class='mb-6'>
+                {{-- <div class='mb-6'>
                     <label class='block mb-2 uppercase font-bold text-xs text-gray-700'
                         for='email'
                     >
@@ -57,9 +64,9 @@
                     @error('email')
                         <p class='text-red-500 text-xs mt-2'>{{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
                 
-                <div class='mb-6'>
+                {{-- <div class='mb-6'>
                     <label class='block mb-2 uppercase font-bold text-xs text-gray-700'
                         for='password'
                     >
@@ -74,15 +81,15 @@
                     @error('password')
                         <p class="text-red-500 text-xs mt-1"> {{ $message }}</p>
                     @enderror
-                </div>
+                </div> --}}
                 
-                <div class='mb-6'>
+                {{-- <div class='mb-6'>
                     <button type='submit'
                       class='bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500'
                     >
                         Submit
                     </button>
-                </div>
+                </div> --}}
                 
                 {{-- @if($errors-any())
                     <ul>
