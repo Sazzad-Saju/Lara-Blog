@@ -34,41 +34,4 @@ class PostController extends Controller
         return view('posts.show', ['post' => $post]);
     }
     
-    public function create()
-    {
-        // if(auth()->guest()){
-        //     // abort(403);
-        //     abort(Response::HTTP_FORBIDDEN);
-        // }
-        
-        // if(auth()->user()->user_name !== 'SuperAdmin'){
-        //     abort(Response::HTTP_FORBIDDEN);
-        // }
-        // if(auth()->user()?->user_name !== 'SuperAdmin'){
-        //     abort(Response::HTTP_FORBIDDEN);
-        // }
-        return view('posts.create');
-    }
-    
-    public function store()
-    {
-        // request()->file('thumbnail')->store('thumbnails');
-        // return 'Done';
-        // // ddd(request()->all());
-        $attributes = request()->validate([
-            'title' => 'required',
-            'thumbnail' => 'required|image',
-            'slug' => ['required', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required',
-            'body' => 'required',
-            'category_id' => ['required', Rule::exists('categories', 'id')]
-        ]);
-        
-        $attributes['user_id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnail');
-        
-        Post::create($attributes);
-        
-        return redirect('/');
-    }
 }
