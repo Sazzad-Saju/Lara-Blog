@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPostController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostController;
@@ -19,7 +20,15 @@ use Illuminate\Validation\ValidationException;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Symfony\Component\Yaml\Yaml;
 
-Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/', [DashboardController::class, 'index'])->name('home');
+
+Route::get('posts', [PostController::class, 'index']);
+Route::get('posts/create', [PostController::class, 'create']);
+Route::post('posts', [PostController::class, 'store']);
+Route::get('posts/{post}/edit', [PostController::class, 'edit']);
+Route::patch('posts/{post}', [PostController::class, 'update']);
+Route::delete('posts/{post}', [PostController::class, 'destroy']);
+
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
 
@@ -40,6 +49,7 @@ Route::post('newsletter', NewsletterController::class);
 // Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('can:admin');
 
 Route::middleware('can:admin')->group(function(){
+    Route::get('admin/posts/status={status}', [AdminPostController::class, 'updateAllStatus']);
     Route::resource('admin/posts', AdminPostController::class)->except('show');
     // Route::get('admin/posts', [AdminPostController::class, 'index']);
     // Route::get('admin/posts/create', [AdminPostController::class, 'create']);

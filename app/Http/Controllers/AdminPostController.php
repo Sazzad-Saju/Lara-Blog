@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enumeration\PostType;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -22,36 +23,15 @@ class AdminPostController extends Controller
 
     public function store()
     {
-        // $post = new Post();
-
-        // $attributes = request()->validate([
-        //     'title' => 'required',
-        //     // 'thumbnail' => 'required|image',
-        //     'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
-        //     'slug' => ['required', Rule::unique('posts', 'slug')],
-        //     'excerpt' => 'required',
-        //     'body' => 'required',
-        //     'category_id' => ['required', Rule::exists('categories', 'id')]
-        // ]);
-
-        // $attributes = $this->validatePost(new Post());
-        // $attributes = $this->validatePost();
-
-        // $attributes['user_id'] = auth()->id();
-        // $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnail');
 
         $attributes = array_merge($this->validatePost(), [
+            // 'status' => PostType::$Approved,
             'user_id' => request()->user()->id,
             'thumbnail' => request()->file('thumbnail')->store('thumbnails')
         ]);
 
         Post::create($attributes);
-
-        // Post::create(array_merge($this->validatePost(), [
-        //     'user_id' => request()->user()->id,
-        //     'thumbnail' => request()->file('thumbnail')->store('thumbnails')
-        // ]));
-
+        
         return redirect('/');
     }
 
@@ -61,6 +41,7 @@ class AdminPostController extends Controller
     }
     public function update(Post $post)
     {
+        // ddd(request()->all());
         // $attributes = request()->validate([
         //     'title' => 'required',
         //     // 'thumbnail' => 'image',
@@ -89,15 +70,26 @@ class AdminPostController extends Controller
 
         return back()->with('success', 'Post Deleted!');
     }
-
-    // public function validatePost(Post $post): array
-    // public function validatePost(?Post $post = null): array
+    
+    public function updateAllStatus($status)
+    {
+        if($status == PostType::$Pending){
+            Post::query()->update(['status' => PostType::$Pending]);
+        }else if($status == PostType::$Approved){
+            Post::query()->update(['status' => PostType::$Approved]);
+        }else if($status == PostType::$Cancelled){
+            Post::query()->update(['status' => PostType::$Cancelled]);
+        }
+        
+        return back()->with('success', 'Status Updated!');
+    }
     protected function validatePost(?Post $post = null): array
     {
         $post ??= new Post();
 
         return request()->validate([
             'title' => 'required',
+            'status' => $post->exists ? ['required'] : PostType::$Approved,
             'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
             'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
             'excerpt' => 'required',

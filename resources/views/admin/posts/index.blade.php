@@ -1,5 +1,15 @@
+@php
+    use App\Enumeration\PostType;
+@endphp
 <x-layout>
     <x-setting heading="Manage Post">
+        <div class="mb-4 flex justify-end">
+            
+            <x-common-button href="/admin/posts/status={{PostType::$Approved}}" class="bg-green-100 text-green-800 hover:bg-green-300 mr-2">Approve All</x-common-button>
+            <x-common-button href="/admin/posts/status={{PostType::$Cancelled}}" class="bg-red-100 text-red-800 hover:bg-red-300 mr-2">Cancelled All</x-common-button>
+            <x-common-button href="/admin/posts/status={{PostType::$Pending}}" class="bg-yellow-100 text-yellow-800 hover:bg-yellow-300 mr-2">Pending All</x-common-button>
+            
+        </div>
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -19,17 +29,21 @@
                                         <td>
                                         
                                         {{-- later work on approveing post, and anybody can post --}}
-                                        {{-- <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                Approved
-                                            </span>
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                Pending
-                                            </span>
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                Declined
-                                            </span>
-                                        </td> --}}
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @if($post->status === PostType::$Approved)
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    Approved
+                                                </span>
+                                            @elseif($post->status === PostType::$Pending)
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                    Pending
+                                                </span>
+                                            @elseif($post->status === PostType::$Cancelled)
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                    Declined
+                                                </span>
+                                            @endif
+                                        </td>
                                             
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <a href="/admin/posts/{{ $post->id }}/edit" class="text-blue-500 hover:text-blue-600">Edit</a>

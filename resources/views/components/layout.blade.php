@@ -35,8 +35,9 @@
                         @admin
                             <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">All Posts</x-dropdown-item>
                             <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
-                        {{-- @endif --}}
-                        {{-- @endcan --}}
+                        @else
+                            <x-dropdown-item href="/posts" :active="request()->is('posts')">All Posts</x-dropdown-item>
+                            <x-dropdown-item href="/posts/create" :active="request()->is('posts/create')">Make Post</x-dropdown-item>
                         @endadmin
                         
                         <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout').submit()">Log Out</x-dropdown-item>
