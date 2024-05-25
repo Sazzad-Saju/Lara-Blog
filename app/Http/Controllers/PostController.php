@@ -7,12 +7,18 @@ use App\Models\Post;
 // use GuzzleHttp\Psr7\Response;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
     public function index()
     {
+        // dd(Gate::allows('admin'));
+        // dd(request()->user()->can('admin'));
+        // dd(request()->user()->cannot('admin'));
+        // $this->authorize('admin');
+        
         // return Post::latest()->filter(
         //     request(['search', 'category', 'author'])
         // )->paginate(10);
