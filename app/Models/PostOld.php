@@ -19,21 +19,8 @@ class Post{
         $this->slug = $slug;
     }
     
-    public static function all(){
-        // $files =  File::files(resource_path("posts/"));
-        
-        // // return array_map(function($file){
-        // //     return "foo";
-        // // }, $files);
-        
-        // // return array_map(function($file){
-        // //     return $file->getContents();
-        // // }, $files);
-        
-        // return array_map(fn($file) => $file->getContents(), $files);
-        // return File::files(resource_path("posts"));
-        // return gettype(File::files(resource_path("posts")));
-        
+    public static function all()
+    {
         return cache()->rememberForever('posts.all', function(){
             return collect(File::files(resource_path("posts")))
             ->map(fn($file) => YamlFrontMatter::parseFile(($file)))
@@ -48,20 +35,8 @@ class Post{
         });
         
     }
-    public static function find($slug){
-        // if(!file_exists($path = resource_path("posts/{$slug}.html"))){
-        //     // return redirect('/'); not here
-        //     // abort(404);
-        //     // throw new \Exception;
-        //     throw new ModelNotFoundException;
-        // }
-        
-        // return cache()->remember("posts.{$slug}", 1200, fn() => file_get_contents($path));
-        
-        /**of all posts, find the one with the slug that matches what requested */
-        // $posts = static::all();
-        // return $posts->firstWhere('slug', $slug);
-        
+    public static function find($slug)
+    {
         return static::all()->firstWhere('slug', $slug);
     }
     public static function findOrFail($slug) {

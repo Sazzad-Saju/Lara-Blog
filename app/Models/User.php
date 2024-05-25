@@ -18,13 +18,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $guarded = [];
-    
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,22 +34,10 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     
-    // protected $casts = [
-    //     'password' => 'hashed',
-    // ];
-    
-    //Mutator
-    // public function setUsernameAttribute($password)
-    // {
-    //     $this->attributes['user_name'] = 'Foobar';
-    // }
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
-        // $this->attributes['password'] = 'foobar';
     }
-    
-    //accessor
     public function getUserNameAttribute($value)
     {
         return ucwords($value);

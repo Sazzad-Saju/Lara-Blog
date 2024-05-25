@@ -9,8 +9,6 @@ class PostCommentsController extends Controller
 {
     public function store(Post $post)
     {
-        // return request()->user()->id;
-        // return request()->all();
         request()->validate([
             'body' =>   'required'
         ]);

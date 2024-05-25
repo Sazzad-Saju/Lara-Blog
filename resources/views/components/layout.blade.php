@@ -3,16 +3,16 @@
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-{{-- <link rel="stylesheet" href="{{asset('app.css')}}"> --}}
 <script src="//unpkg.com/alpinejs" defer></script>
 <style>
-    html{
+    html {
         scroll-behavior: smooth;
     }
 </style>
 
 
 <body style="font-family: Open Sans, sans-serif">
+    
     <section class="px-6 py-8">
         <nav class="md:flex md:justify-between md:items-center">
             <div>
@@ -23,15 +23,10 @@
 
             <div class="mt-8 md:mt-0 flex items-center">
                 @auth
-                    {{-- <span class="text-xs font-bold uppercase">Welcome, {{auth()->user()->name}}!</span> --}}
                     <x-dropdown>
                         <x-slot name="trigger">
-                            <button class="text-xs font-bold uppercase">Welcome, {{auth()->user()->name}}!</button>
+                            <button class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->name }}!</button>
                         </x-slot>
-                        {{-- <x-dropdown-item href="/admin/dashboard">Dashboard</x-dropdown-item> --}}
-                        
-                        {{-- @if(auth()->user()->can('admin')) --}}
-                        {{-- @can('admin') --}}
                         @admin
                             <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">All Posts</x-dropdown-item>
                             <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
@@ -39,20 +34,16 @@
                             <x-dropdown-item href="/posts" :active="request()->is('posts')">All Posts</x-dropdown-item>
                             <x-dropdown-item href="/posts/create" :active="request()->is('posts/create')">Make Post</x-dropdown-item>
                         @endadmin
-                        
-                        <x-dropdown-item href="#" x-data="{}" @click.prevent="document.querySelector('#logout').submit()">Log Out</x-dropdown-item>
+
+                        <x-dropdown-item href="#" x-data="{}"
+                            @click.prevent="document.querySelector('#logout').submit()">Log Out</x-dropdown-item>
                         <form id="logout" method="POST" action="/logout" class="hidden">
                             @csrf
                         </form>
                     </x-dropdown>
-                        
-                    {{-- <form method="POST" action="/logout">
-                        @csrf
-                        <button type="submit" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">Log Out</button>
-                    </form> --}}
                 @else
-                <a href="/register" class="text-xs font-bold uppercase">Register</a> 
-                <a href="/login" class="ml-3 text-xs font-bold uppercase">Log In</a> 
+                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
+                    <a href="/login" class="ml-3 text-xs font-bold uppercase">Log In</a>
                 @endauth
 
                 <a href="#newsletter"
@@ -64,7 +55,8 @@
 
         {{ $slot }}
 
-        <footer id="newsletter" class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
+        <footer id="newsletter"
+            class="bg-gray-100 border border-black border-opacity-5 rounded-xl text-center py-16 px-10 mt-16">
             <img src="/images/lary-newsletter-icon.svg" alt="" class="mx-auto -mb-6" style="width: 145px;">
             <h5 class="text-3xl">Stay in touch with the latest posts</h5>
             <p class="text-sm mt-3">Promise to keep the inbox clean. No bugs.</p>
@@ -80,10 +72,7 @@
                             </label>
 
                             <div>
-                                <input id="email" 
-                                    type="text" 
-                                    name="email" 
-                                    placeholder="Your email address"
+                                <input id="email" type="text" name="email" placeholder="Your email address"
                                     class="lg:bg-transparent py-2 lg:py-0 pl-4 focus-within:outline-none">
                                 @error('email')
                                     <span class="text-xs text-red-500">{{ $message }}</span>
@@ -100,18 +89,6 @@
             </div>
         </footer>
     </section>
-    
-    {{-- @if (session()->has('success'))
-        <div 
-        class="bg-blue-500 bottom-3 fixed px-4 py-2 right-0 right-3 rounded-xl text-sm text-white"
-          x-data="{ show: true }"
-          x-init="setTimeout(() => show = false, 4000)"
-          x-show="show"
-        > --}}
-            {{-- <p>{{ sesion()->get('success') }}</p> --}}
-            {{-- <p>{{ session('success') }}</p>
-        </div>
-    @endif --}}
     
     <x-flash />
 </body>

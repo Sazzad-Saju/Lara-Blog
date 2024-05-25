@@ -19,19 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // app()->bind('foo', function (){
-        //     return 'bar';
-        // });
-        
-        // app()->bind(Newsletter::class, function(){
-        //     return new Newsletter(
-        //         new ApiClient(),
-        //         'foobar'
-        //     );
-        // });
-        
-        // app()->bind(Newsletter::class, function(){
-        // app()->bind(MailchimpNewsletter::class, function(){
         app()->bind(Newsletter::class, function(){
             
             $client = (new ApiClient)->setConfig([
@@ -39,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
                 'server' => 'us18'
             ]);
             
-            // return new Newsletter($client);
             return new MailchimpNewsletter($client);
         });
     }
@@ -49,11 +35,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Paginator::useBootstrap();
         Model::unguard();
         
-        Gate::define('admin', function (User $user){
-            // auth()->user()?->user_name !== 'SuperAdmin';
+        Gate::define('admin', function (User $user)
+        {
             return $user->user_name == 'SuperAdmin';
         });
         

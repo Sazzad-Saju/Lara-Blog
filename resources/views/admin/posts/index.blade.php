@@ -28,7 +28,6 @@
                                             </div>
                                         <td>
                                         
-                                        {{-- later work on approveing post, and anybody can post --}}
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @if($post->status === PostType::$Approved)
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">

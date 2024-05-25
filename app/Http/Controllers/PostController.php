@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enumeration\PostType;
 use App\Models\Category;
 use App\Models\Post;
-// use GuzzleHttp\Psr7\Response;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -15,7 +14,6 @@ class PostController extends Controller
 {
     public function index()
     {
-        // dd(request()->user()->id);
         return view('posts.index',[
             'posts' => Post::where('user_id', request()->user()->id)->paginate(50)
         ]);
