@@ -22,17 +22,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Sazzad Saju'
         // ]);
         
-        // Post::factory(30)->create([
-        //     'user_id' => $user->id,
-        // ]);
-        
         //Seed Primary User
-        User::create([
+        $user = User::create([
             'name' => 'Admin',
             'user_name' => 'SuperAdmin',
             'email' => 'admin@larablog.com',
             'is_admin' => 1,
             'password' => '123456',
+        ]);
+        
+        Post::factory(30)->create([
+            'user_id' => $user->id,
         ]);
     }
 }
